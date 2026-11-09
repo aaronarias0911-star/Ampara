@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ampara | Repostería Artesanal</title>
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           VARIABLES DE MARCA
+           ========================================= */
+        :root {
+            --color-naranja: #E14E26;
+            --color-lila: #D3C3CB;
+            --color-crema: #F7ECB9;
+            --color-marron: #3F1411;
+            --color-blanco: #FFFFFF;
+            
+            --font-titulos: 'Outfit', sans-serif;
+            --font-textos: 'Open Sans', sans-serif;
+            
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 2rem;
+            --spacing-xl: 4rem;
+        }
+
+        /* RESET Y BASE */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-textos);
+            background-color: var(--color-crema);
+            color: var(--color-marron);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3, h4 { font-family: var(--font-titulos); font-weight: 700; line-height: 1.2; }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+
+        /* HEADER */
+        header {
+            background-color: var(--color-crema);
+            padding: var(--spacing-md) var(--spacing-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(63, 20, 17, 0.1);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .logo { font-family: var(--font-titulos); font-size: 2rem; font-weight: 700; color: var(--color-marron); letter-spacing: -1px; }
+        .logo span { display: inline-block; transform: rotate(-2deg); }
+        .nav-links { display: flex; gap: var(--spacing-lg); align-items: center; }
+        .nav-links a { font-family: var(--font-textos); font-weight: 400; font-size: 0.95rem; transition: color 0.3s ease; }
+        .nav-links a:hover { color: var(--color-naranja); }
+        .btn-contacto {
+            background-color: var(--color-naranja); color: var(--color-crema) !important;
+            padding: 0.6rem 1.5rem; border-radius: 50px; font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .btn-contacto:hover { background-color: #c43d1a; transform: translateY(-2px); }
+        .menu-toggle { display: none; flex-direction: column; cursor: pointer; gap: 5px; }
+        .menu-toggle span { width: 25px; height: 3px; background-color: var(--color-marron); transition: all 0.3s ease; }
+
+        /* HERO */
+        .hero {
+            position: relative; padding: var(--spacing-xl) var(--spacing-lg); min-height: 90vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+            background-image: linear-gradient(90deg, rgba(247, 236, 185, 0.8) 0%, rgba(247, 236, 185, 0.4) 100%), url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><rect width="60" height="60" fill="%23F7ECB9"/><circle cx="30" cy="30" r="2" fill="%23D3C3CB" opacity="0.3"/></svg>');
+            background-size: cover, 60px 60px; overflow: hidden;
+        }
+        .illustration { position: absolute; opacity: 0.6; pointer-events: none; z-index: 0; }
+        .ill-1 { top: 10%; left: 5%; width: 120px; transform: rotate(-15deg); }
+        .ill-2 { top: 20%; right: 8%; width: 100px; transform: rotate(10deg); }
+        .ill-3 { bottom: 15%; left: 10%; width: 90px; transform: rotate(5deg); }
+        .ill-4 { bottom: 10%; right: 5%; width: 130px; transform: rotate(-10deg); }
+        .icon-bread, .icon-scale, .icon-flower, .icon-cake { width: 100%; height: auto; fill: var(--color-marron); opacity: 0.4; }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; }
+        .badge-tradicion {
+            display: inline-block; background-color: var(--color-lila); color: var(--color-marron);
+            padding: 0.4rem 1.2rem; border-radius: 50px; font-family: var(--font-textos);
+            font-size: 0.85rem; font-weight: 600; margin-bottom: var(--spacing-md); letter-spacing: 0.5px;
+        }
+        .hero-title { font-size: clamp(3.5rem, 10vw, 7rem); color: var(--color-marron); margin-bottom: var(--spacing-md); letter-spacing: -2px; text-shadow: 2px 2px 0px rgba(225, 78, 38, 0.2); }
+        .hero-subtitle { font-family: var(--font-textos); font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--color-marron); margin-bottom: var(--spacing-sm); font-weight: 400; }
+        .hero-description { font-size: 1rem; color: #5a3a37; margin-bottom: var(--spacing-xl); max-width: 600px; margin-left: auto; margin-right: auto; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); max-width: 900px; margin: 0 auto; position: relative; z-index: 2; }
+        .stat-card {
+            background-color: rgba(247, 236, 185, 0.9); border: 2px solid var(--color-naranja);
+            border-radius: 12px; padding: var(--spacing-lg) var(--spacing-md); text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease; backdrop-filter: blur(5px);
+        }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(63, 20, 17, 0.1); }
+        .stat-number { font-family: var(--font-titulos); font-size: 1.8rem; font-weight: 700; color: var(--color-marron); margin-bottom: 0.2rem; display: block; }
+        .stat-label { font-family: var(--font-textos); font-size: 0.85rem; color: var(--color-naranja); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* HISTORIA */
+        .historia { padding: var(--spacing-xl) var(--spacing-lg); background-color: var(--color-blanco); }
+        .historia-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); align-items: center; }
+        .historia-texto h2 { font-size: 2.5rem; color: var(--color-marron); margin-bottom: var(--spacing-md); }
+        .historia-texto p { margin-bottom: var(--spacing-md); color: #4a2a27; font-size: 1.05rem; }
+        .highlight { color: var(--color-naranja); font-weight: 600; }
+        .historia-valores { display: flex; flex-direction: column; gap: var(--spacing-md); }
+        .valor-item { display: flex; align-items: flex-start; gap: var(--spacing-md); background-color: var(--color-crema); padding: var(--spacing-md); border-radius: 12px; border-left: 5px solid var(--color-naranja); }
+        .valor-icono { font-size: 1.5rem; color: var(--color-naranja); }
+        .valor-item h3 { font-size: 1.2rem; margin-bottom: 0.2rem; }
+        .valor-item p { font-size: 0.9rem; margin-bottom: 0; color: #5a3a37; }
+
+        /* =========================================
+           SECCIÓN MENÚ (CON MODAL CORREGIDO)
+           ========================================= */
+        .menu-productos { padding: var(--spacing-xl) var(--spacing-lg); background-color: var(--color-crema); position: relative; }
+        .menu-productos::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1.5" fill="%233F1411" opacity="0.1"/></svg>');
+            background-size: 80px 80px; pointer-events: none;
+        }
+        .menu-header { text-align: center; margin-bottom: var(--spacing-xl); position: relative; z-index: 2; }
+        .menu-header h2 { font-size: 2.8rem; color: var(--color-marron); margin-bottom: var(--spacing-sm); }
+        .menu-header p { color: #5a3a37; font-size: 1.1rem; max-width: 600px; margin: 0 auto; }
+
+        .productos-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--spacing-lg); max-width: 1200px; margin: 0 auto;
+            position: relative; z-index: 2;
+        }
+
+        /* Tarjeta de Producto */
+        .producto-card {
+            background: var(--color-blanco); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 8px 25px rgba(63, 20, 17, 0.08);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            cursor: pointer; position: relative;
+            border: 2px solid transparent;
+        }
+        .producto-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(63, 20, 17, 0.15);
+            border-color: var(--color-naranja);
+        }
+
+        .producto-imagen {
+            width: 100%; aspect-ratio: 1 / 1;
+            overflow: hidden; position: relative;
+            background-color: var(--color-lila);
+        }
+        .producto-imagen img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .producto-card:hover .producto-imagen img { transform: scale(1.05); }
+
+        /* Overlay elegante */
+        .producto-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(63, 20, 17, 0.85) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s ease;
+            display: flex; flex-direction: column; justify-content: flex-end;
+            padding: var(--spacing-lg); color: var(--color-crema);
+        }
+        .producto-card:hover .producto-overlay { opacity: 1; }
+        .producto-overlay h3 { font-size: 1.3rem; transform: translateY(10px); transition: transform 0.3s ease; }
+        .producto-card:hover .producto-overlay h3 { transform: translateY(0); }
+        .producto-overlay span { font-size: 0.85rem; font-family: var(--font-textos); display: flex; align-items: center; gap: 5px; margin-top: 5px; }
+        
+        .icon-lupa {
+            position: absolute; top: 15px; right: 15px;
+            background: rgba(255, 255, 255, 0.9); border-radius: 50%;
+            width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0.8); transition: all 0.3s ease;
+            color: var(--color-marron); font-size: 1.2rem;
+        }
+        .producto-card:hover .icon-lupa { opacity: 1; transform: scale(1); }
+
+        /* =========================================
+           MODAL CORREGIDO (LIGHTBOX)
+           ========================================= */
+        .modal {
+            display: none; position: fixed; z-index: 9999;
+            top: 0; left: 0; width: 100vw; height: 100vh; /* Ocupa toda la pantalla */
+            background-color: rgba(42, 13, 11, 0.95);
+            backdrop-filter: blur(8px);
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .modal.activo { display: flex; opacity: 1; }
+
+        .modal-contenido {
+            position: relative; 
+            max-width: 90vw; /* Ancho máximo */
+            max-height: 90vh; /* Alto máximo */
+            transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 12px; 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            display: flex; justify-content: center; align-items: center;
+        }
+        .modal.activo .modal-contenido { transform: scale(1); }
+
+        .modal-contenido img {
+            max-width: 90vw; /* Ajuste para móviles */
+            max-height: 85vh; /* Ajuste para que no toque los bordes */
+            width: auto; height: auto;
+            object-fit: contain; /* Evita que la imagen se deforme */
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .modal-cerrar {
+            position: absolute; top: -15px; right: -15px;
+            background-color: var(--color-naranja); color: var(--color-crema);
+            width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-family: var(--font-titulos); font-weight: bold;
+            cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            z-index: 10000;
+        }
+        .modal-cerrar:hover { transform: rotate(90deg) scale(1.1); background-color: #c43d1a; }
+
+        /* APLICACIONES SECUNDARIAS */
+        .aplicaciones { padding: var(--spacing-xl) var(--spacing-lg); background-color: var(--color-marron); color: var(--color-crema); position: relative; overflow: hidden; }
+        .aplicaciones::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M50,10 Q60,30 50,40 Q40,30 50,10" fill="none" stroke="%23F7ECB9" stroke-width="1" opacity="0.05"/><circle cx="50" cy="50" r="15" fill="none" stroke="%23E14E26" stroke-width="1" opacity="0.05"/></svg>');
+            background-size: 150px 150px; opacity: 0.5; pointer-events: none;
+        }
+        .aplicaciones-container { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+        .aplicaciones-header { text-align: center; margin-bottom: var(--spacing-xl); }
+        .aplicaciones-header h2 { font-size: 2.5rem; color: var(--color-crema); margin-bottom: var(--spacing-sm); }
+        .aplicaciones-header p { color: var(--color-lila); max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+        .ilustraciones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--spacing-lg); margin-bottom: var(--spacing-xl); justify-items: center; }
+        .ilustracion-item { background-color: rgba(247, 236, 185, 0.05); border: 1px solid rgba(247, 236, 185, 0.2); border-radius: 16px; padding: var(--spacing-lg); width: 100%; display: flex; flex-direction: column; align-items: center; gap: var(--spacing-md); transition: transform 0.3s ease, border-color 0.3s ease; }
+        .ilustracion-item:hover { transform: translateY(-5px); border-color: var(--color-naranja); }
+        .ilustracion-item svg { width: 60px; height: 60px; fill: none; stroke: var(--color-crema); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s ease; }
+        .ilustracion-item:hover svg { stroke: var(--color-naranja); }
+        .ilustracion-item span { font-family: var(--font-titulos); font-size: 0.9rem; font-weight: 600; color: var(--color-lila); text-transform: uppercase; letter-spacing: 1px; }
+        .aplicaciones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
+        .app-card { background-color: var(--color-crema); color: var(--color-marron); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+        .app-card:hover { transform: translateY(-8px); }
+        .app-card-image { height: 200px; background-color: var(--color-lila); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .app-card-image.box-mockup { background: linear-gradient(135deg, var(--color-naranja) 0%, #c43d1a 100%); }
+        .app-card-image.box-mockup::after { content: "Ampara"; font-family: var(--font-titulos); font-size: 2rem; font-weight: 700; color: var(--color-crema); transform: rotate(-5deg); }
+        .app-card-image.bag-mockup { background: linear-gradient(135deg, var(--color-lila) 0%, #b8a5af 100%); }
+        .app-card-image.bag-mockup::after { content: "Ampara"; font-family: var(--font-titulos); font-size: 2rem; font-weight: 700; color: var(--color-marron); transform: rotate(2deg); }
+        .app-card-image.card-mockup { background: var(--color-crema); border-bottom: 2px dashed var(--color-lila); }
+        .app-card-image.card-mockup::after { content: "Ampara\nRepostería en tus manos"; font-family: var(--font-titulos); font-size: 1.2rem; font-weight: 700; color: var(--color-marron); text-align: center; white-space: pre-line; }
+        .app-card-content { padding: var(--spacing-lg); }
+        .app-card-content h3 { font-size: 1.3rem; margin-bottom: var(--spacing-sm); color: var(--color-marron); }
+        .app-card-content p { font-size: 0.95rem; color: #5a3a37; line-height: 1.5; }
+
+        /* FOOTER */
+        footer { background-color: #2a0d0b; color: var(--color-crema); padding: var(--spacing-xl) var(--spacing-lg); text-align: center; }
+        .footer-content { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: var(--spacing-md); align-items: center; }
+        .footer-logo { font-family: var(--font-titulos); font-size: 2.5rem; color: var(--color-crema); margin-bottom: var(--spacing-sm); }
+        .footer-tagline { font-size: 1rem; color: var(--color-lila); margin-bottom: var(--spacing-md); font-style: italic; }
+        .footer-info { display: flex; gap: var(--spacing-lg); flex-wrap: wrap; justify-content: center; font-size: 0.9rem; color: var(--color-lila); }
+        .footer-info a { color: var(--color-crema); transition: color 0.3s; }
+        .footer-info a:hover { color: var(--color-naranja); }
+        .footer-credits { margin-top: var(--spacing-lg); font-size: 0.75rem; color: #6b4a47; }
+
+        /* ANIMACIONES Y RESPONSIVE */
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: var(--color-crema); flex-direction: column; padding: var(--spacing-lg); border-bottom: 1px solid rgba(63, 20, 17, 0.1); box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
+            .nav-links.active { display: flex; }
+            .menu-toggle { display: flex; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .historia-container { grid-template-columns: 1fr; }
+            .hero-title { font-size: 3.5rem; }
+            .illustration { display: none; }
+            .aplicaciones-grid { grid-template-columns: 1fr; }
+            .ilustraciones-grid { grid-template-columns: repeat(2, 1fr); }
+            .productos-grid { grid-template-columns: 1fr; }
+            
+            /* Ajustes del modal en móvil */
+            .modal-cerrar { top: -15px; right: -5px; width: 35px; height: 35px; font-size: 1.2rem; }
+            .modal-contenido img { max-height: 80vh; }
+        }
+        @media (max-width: 480px) {
+            .hero { padding: var(--spacing-lg) var(--spacing-md); min-height: 80vh; }
+            .stat-card { padding: var(--spacing-md) var(--spacing-sm); }
+            .stat-number { font-size: 1.4rem; }
+            .footer-info { flex-direction: column; gap: var(--spacing-sm); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo"><span>Ampara</span></a>
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#historia">Historia</a></li>
+                    <li><a href="#menu">Menú</a></li>
+                    <li><a href="#aplicaciones">Aplicaciones</a></li>
+                    <li><a href="#contacto" class="btn-contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero" id="inicio">
+        <div class="illustration ill-1"><svg class="icon-bread" viewBox="0 0 100 100"><path d="M10,50 Q10,20 50,10 Q90,20 90,50 Q90,80 50,90 Q10,80 10,50 Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M30,40 Q50,30 70,40" fill="none" stroke="currentColor" stroke-width="2"/><path d="M25,60 Q50,50 75,60" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="illustration ill-2"><svg class="icon-scale" viewBox="0 0 100 100"><rect x="30" y="30" width="40" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><path d="M40,40 L40,70 L60,70 L60,40" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="60" r="8" fill="none" stroke="currentColor" stroke-width="3"/></svg></div>
+        <div class="illustration ill-3"><svg class="icon-flower" viewBox="0 0 100 100"><circle cx="50" cy="50" r="10" fill="none" stroke="currentColor" stroke-width="3"/><path d="M50,10 Q60,30 50,40 Q40,30 50,10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M90,50 Q70,60 60,50 Q70,40 90,50" fill="none" stroke="currentColor" stroke-width="2"/><path d="M50,90 Q40,70 50,60 Q60,70 50,90" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10,50 Q30,40 40,50 Q30,60 10,50" fill="none" stroke="currentColor" stroke-width="2"/></svg></div>
+        <div class="illustration ill-4"><svg class="icon-cake" viewBox="0 0 100 100"><rect x="20" y="50" width="60" height="40" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M20,60 Q50,50 80,60" fill="none" stroke="currentColor" stroke-width="3"/><path d="M40,50 L40,30 M60,50 L60,30" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="40" cy="25" r="3" fill="currentColor"/><circle cx="60" cy="25" r="3" fill="currentColor"/></svg></div>
+
+        <div class="hero-content fade-in">
+            <span class="badge-tradicion">Tradición desde 1981</span>
+            <h1 class="hero-title">Ampara</h1>
+            <p class="hero-subtitle">Repostería Artesanal que mantiene viva la tradición familiar.</p>
+            <p class="hero-description">Tres generaciones creando productos de alta calidad que evocan memoria, tradición y hogar.</p>
+        </div>
+
+        <div class="stats-grid fade-in">
+            <div class="stat-card"><span class="stat-number">3 Generaciones</span><span class="stat-label">Tradición Familiar</span></div>
+            <div class="stat-card"><span class="stat-number">100% Artesanal</span><span class="stat-label">Recetas Originales</span></div>
+            <div class="stat-card"><span class="stat-number">+35 Años</span><span class="stat-label">De Experiencia</span></div>
+        </div>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="historia" id="historia">
+        <div class="historia-container">
+            <div class="historia-texto fade-in">
+                <h2>Nuestra Historia</h2>
+                <p>La marca nace de un legado familiar con más de 35 años de trayectoria en el mercado. Lo que comenzó con la abuela, continuó con la madre y hoy es liderado por la nieta, consolidando <span class="highlight">tres generaciones de saber hacer repostero</span>.</p>
+                <p>El nombre proviene del aymara, donde significa <span class="highlight">"Mano"</span>, <span class="highlight">"Manos"</span> o <span class="highlight">"Artesanal"</span>. Este término es el eje central de la marca, ya que representa el trabajo manual, el acto de amasar y el traspaso de conocimiento de generación en generación.</p>
+                <p>Ampara es la mano que crea, que cuida la receta y que ofrece el producto final al hogar.</p>
+            </div>
+            <div class="historia-valores fade-in">
+                <div class="valor-item"><div class="valor-icono">🤝</div><div><h3>Honestidad</h3><p>La honestidad es la base de cada receta. Creemos en la pureza de los ingredientes y en procesos reales, sin atajos industriales.</p></div></div>
+                <div class="valor-item"><div class="valor-icono">🌱</div><div><h3>Responsabilidad</h3><p>Tenemos en nuestras manos una historia de 35 años que debemos cuidar. Nuestra responsabilidad es con la calidad, nuestro equipo y el medio ambiente.</p></div></div>
+                <div class="valor-item"><div class="valor-icono">❤️</div><div><h3>Pasión</h3><p>Como nuestro nombre indica, todo nace de las manos. Ponemos el corazón en el detalle, en el amasado y en la presentación final.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENÚ CON MODAL -->
+    <section class="menu-productos" id="menu">
+        <div class="menu-header fade-in">
+            <h2>Nuestra Repostería</h2>
+            <p>Elaborados a mano con ingredientes naturales y el sabor de tres generaciones. Haz clic en cualquier producto para ver su ficha completa.</p>
+        </div>
+
+        <div class="productos-grid fade-in">
+            <!-- Producto 1 -->
+            <div class="producto-card" onclick="abrirModal('img/rollos.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/rollos.jpeg" alt="Rollos de Canela">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Rollos de Canela</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 2 -->
+            <div class="producto-card" onclick="abrirModal('img/croissants.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/croissants.jpeg" alt="Croissants">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Croissants</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 3 -->
+            <div class="producto-card" onclick="abrirModal('img/muffins.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/muffins.jpeg" alt="Muffins de Frutos Rojos">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Muffins de Frutos Rojos</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 4 -->
+            <div class="producto-card" onclick="abrirModal('img/madeleines.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/madeleines.jpeg" alt="Madeleines">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Madeleines</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 5 -->
+            <div class="producto-card" onclick="abrirModal('img/pan.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/pan.jpeg" alt="Pan Artesanal">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Pan Artesanal</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Producto 6 -->
+            <div class="producto-card" onclick="abrirModal('img/galletas.jpeg')">
+                <div class="producto-imagen">
+                    <img src="img/galletas.jpeg" alt="Galletas de Chocolate">
+                    <div class="icon-lupa">🔍</div>
+                    <div class="producto-overlay">
+                        <h3>Galletas de Chocolate</h3>
+                        <span>Ver ficha completa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL (ESTRUCTURA OCULTA) -->
+    <div class="modal" id="miModal">
+        <div class="modal-contenido">
+            <span class="modal-cerrar" onclick="cerrarModal()">&times;</span>
+            <img id="imagenModal" src="" alt="Vista previa del producto">
+        </div>
+    </div>
+
+    <!-- APLICACIONES SECUNDARIAS -->
+    <section class="aplicaciones" id="aplicaciones">
+        <div class="aplicaciones-container">
+            <div class="aplicaciones-header fade-in">
+                <h2>Aplicaciones Secundarias</h2>
+                <p>Recursos gráficos, ilustraciones y puntos de contacto que refuerzan la identidad artesanal de Ampara en cada detalle.</p>
+            </div>
+            <div class="ilustraciones-grid fade-in">
+                <div class="ilustracion-item"><svg viewBox="0 0 100 100"><path d="M20,50 Q20,20 50,15 Q80,20 80,50 Q80,80 50,85 Q20,80 20,50 Z"/><path d="M35,45 Q50,35 65,45"/><path d="M30,60 Q50,50 70,60"/></svg><span>Pan Artesanal</span></div>
+                <div class="ilustracion-item"><svg viewBox="0 0 100 100"><rect x="25" y="25" width="50" height="15" rx="5"/><path d="M35,40 L35,75 L65,75 L65,40"/><circle cx="50" cy="60" r="10"/><path d="M50,50 L50,55"/></svg><span>Balanza</span></div>
+                <div class="ilustracion-item"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="12"/><path d="M50,15 Q65,35 50,38 Q35,35 50,15"/><path d="M85,50 Q65,65 62,50 Q65,35 85,50"/><path d="M50,85 Q35,65 50,62 Q65,65 50,85"/><path d="M15,50 Q35,35 38,50 Q35,65 15,50"/></svg><span>Flor</span></div>
+                <div class="ilustracion-item"><svg viewBox="0 0 100 100"><path d="M25,40 Q25,20 50,20 Q75,20 75,40 L75,80 L25,80 Z"/><path d="M25,45 Q50,35 75,45"/><path d="M40,20 L40,10 M60,20 L60,10"/><circle cx="40" cy="8" r="3"/><circle cx="60" cy="8" r="3"/></svg><span>Queque</span></div>
+            </div>
+            <div class="aplicaciones-grid fade-in">
+                <div class="app-card"><div class="app-card-image box-mockup"></div><div class="app-card-content"><h3>Empaque para Productos</h3><p>El empaque protege y presenta los productos, además de comunicar la identidad de Ampara mediante los colores, logotipo e ilustraciones.</p></div></div>
+                <div class="app-card"><div class="app-card-image bag-mockup"></div><div class="app-card-content"><h3>Bolsa para Llevar</h3><p>La bolsa facilita el transporte de los productos y prolonga la presencia de la marca fuera del punto de venta.</p></div></div>
+                <div class="app-card"><div class="app-card-image card-mockup"></div><div class="app-card-content"><h3>Tarjeta de Presentación</h3><p>La tarjeta reúne los datos de contacto y elementos esenciales de identidad, ofreciendo un medio sencillo para recordar y reconocer la marca.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer id="contacto">
+        <div class="footer-content">
+            <div class="footer-logo">Ampara</div>
+            <p class="footer-tagline">Repostería en tus manos</p>
+            <div class="footer-info">
+                <span>📍 Z. San Pedro, Calle Boquerón #1512</span>
+                <span>📞 +591 78880822</span>
+                <a href="mailto:AmparaManos@gmail.com">✉️ AmparaManos@gmail.com</a>
+            </div>
+            <div class="footer-info">
+                <a href="#">@Ampara</a>
+                <a href="#">@AmparaReposteria</a>
+            </div>
+            <div class="footer-credits">
+                <p>&copy; 2026 Ampara. Todos los derechos reservados.</p>
+                <p>Manual de Identidad Visual</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Menú Hamburguesa
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const spans = menuToggle.querySelectorAll('span');
+            if (navLinks.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
+            } else {
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            }
+        });
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const spans = menuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'none';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'none';
+            });
+        });
+
+        // Animación de aparición
+        const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) { target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            });
+        });
+
+        /* =========================================
+           LÓGICA DEL MODAL CORREGIDA
+           ========================================= */
+        const modal = document.getElementById('miModal');
+        const imagenModal = document.getElementById('imagenModal');
+
+        function abrirModal(rutaImagen) {
+            modal.classList.add('activo');
+            imagenModal.src = rutaImagen;
+            document.body.style.overflow = 'hidden'; // Evita el scroll de fondo
+        }
+
+        function cerrarModal() {
+            modal.classList.remove('activo');
+            document.body.style.overflow = 'auto'; // Restaura el scroll
+            setTimeout(() => { imagenModal.src = ''; }, 400); // Limpia la imagen después de la animación
+        }
+
+        // Cerrar al hacer clic fuera de la imagen
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                cerrarModal();
+            }
+        });
+
+        // Cerrar con la tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('activo')) {
+                cerrarModal();
+            }
+        });
+    </script>
+</body>
+</html>
