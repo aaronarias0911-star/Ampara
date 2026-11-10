@@ -116,7 +116,7 @@
         .valor-item p { font-size: 0.9rem; margin-bottom: 0; color: #5a3a37; }
 
         /* =========================================
-           SECCIÓN MENÚ (CON MODAL CORREGIDO)
+           SECCIÓN MENÚ
            ========================================= */
         .menu-productos { padding: var(--spacing-xl) var(--spacing-lg); background-color: var(--color-crema); position: relative; }
         .menu-productos::before {
@@ -182,11 +182,11 @@
         .producto-card:hover .icon-lupa { opacity: 1; transform: scale(1); }
 
         /* =========================================
-           MODAL CORREGIDO (LIGHTBOX)
+           MODAL
            ========================================= */
         .modal {
             display: none; position: fixed; z-index: 9999;
-            top: 0; left: 0; width: 100vw; height: 100vh; /* Ocupa toda la pantalla */
+            top: 0; left: 0; width: 100vw; height: 100vh;
             background-color: rgba(42, 13, 11, 0.95);
             backdrop-filter: blur(8px);
             justify-content: center; align-items: center;
@@ -196,8 +196,8 @@
 
         .modal-contenido {
             position: relative; 
-            max-width: 90vw; /* Ancho máximo */
-            max-height: 90vh; /* Alto máximo */
+            max-width: 90vw; 
+            max-height: 90vh; 
             transform: scale(0.8); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border-radius: 12px; 
             box-shadow: 0 25px 50px rgba(0,0,0,0.5);
@@ -206,10 +206,10 @@
         .modal.activo .modal-contenido { transform: scale(1); }
 
         .modal-contenido img {
-            max-width: 90vw; /* Ajuste para móviles */
-            max-height: 85vh; /* Ajuste para que no toque los bordes */
+            max-width: 90vw; 
+            max-height: 85vh; 
             width: auto; height: auto;
-            object-fit: contain; /* Evita que la imagen se deforme */
+            object-fit: contain; 
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
@@ -243,16 +243,30 @@
         .ilustracion-item svg { width: 60px; height: 60px; fill: none; stroke: var(--color-crema); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.3s ease; }
         .ilustracion-item:hover svg { stroke: var(--color-naranja); }
         .ilustracion-item span { font-family: var(--font-titulos); font-size: 0.9rem; font-weight: 600; color: var(--color-lila); text-transform: uppercase; letter-spacing: 1px; }
+        
         .aplicaciones-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--spacing-lg); }
         .app-card { background-color: var(--color-crema); color: var(--color-marron); border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
         .app-card:hover { transform: translateY(-8px); }
-        .app-card-image { height: 200px; background-color: var(--color-lila); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
-        .app-card-image.box-mockup { background: linear-gradient(135deg, var(--color-naranja) 0%, #c43d1a 100%); }
-        .app-card-image.box-mockup::after { content: "Ampara"; font-family: var(--font-titulos); font-size: 2rem; font-weight: 700; color: var(--color-crema); transform: rotate(-5deg); }
-        .app-card-image.bag-mockup { background: linear-gradient(135deg, var(--color-lila) 0%, #b8a5af 100%); }
-        .app-card-image.bag-mockup::after { content: "Ampara"; font-family: var(--font-titulos); font-size: 2rem; font-weight: 700; color: var(--color-marron); transform: rotate(2deg); }
-        .app-card-image.card-mockup { background: var(--color-crema); border-bottom: 2px dashed var(--color-lila); }
-        .app-card-image.card-mockup::after { content: "Ampara\nRepostería en tus manos"; font-family: var(--font-titulos); font-size: 1.2rem; font-weight: 700; color: var(--color-marron); text-align: center; white-space: pre-line; }
+        
+        /* --- ESTILOS ACTUALIZADOS PARA LAS IMÁGENES DE APLICACIONES --- */
+        .app-card-image { 
+            height: 250px; /* Altura ajustada para que las fotos se vean bien */
+            width: 100%;
+            position: relative; 
+            overflow: hidden; 
+            background-color: var(--color-lila); /* Color de fondo por si la imagen tarda en cargar */
+        }
+        .app-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Hace que la imagen llene el espacio sin deformarse */
+            transition: transform 0.5s ease;
+        }
+        .app-card:hover .app-card-image img {
+            transform: scale(1.08); /* Efecto de zoom al pasar el ratón */
+        }
+        /* ------------------------------------------------------------- */
+
         .app-card-content { padding: var(--spacing-lg); }
         .app-card-content h3 { font-size: 1.3rem; margin-bottom: var(--spacing-sm); color: var(--color-marron); }
         .app-card-content p { font-size: 0.95rem; color: #5a3a37; line-height: 1.5; }
@@ -458,9 +472,40 @@
                 <div class="ilustracion-item"><svg viewBox="0 0 100 100"><path d="M25,40 Q25,20 50,20 Q75,20 75,40 L75,80 L25,80 Z"/><path d="M25,45 Q50,35 75,45"/><path d="M40,20 L40,10 M60,20 L60,10"/><circle cx="40" cy="8" r="3"/><circle cx="60" cy="8" r="3"/></svg><span>Queque</span></div>
             </div>
             <div class="aplicaciones-grid fade-in">
-                <div class="app-card"><div class="app-card-image box-mockup"></div><div class="app-card-content"><h3>Empaque para Productos</h3><p>El empaque protege y presenta los productos, además de comunicar la identidad de Ampara mediante los colores, logotipo e ilustraciones.</p></div></div>
-                <div class="app-card"><div class="app-card-image bag-mockup"></div><div class="app-card-content"><h3>Bolsa para Llevar</h3><p>La bolsa facilita el transporte de los productos y prolonga la presencia de la marca fuera del punto de venta.</p></div></div>
-                <div class="app-card"><div class="app-card-image card-mockup"></div><div class="app-card-content"><h3>Tarjeta de Presentación</h3><p>La tarjeta reúne los datos de contacto y elementos esenciales de identidad, ofreciendo un medio sencillo para recordar y reconocer la marca.</p></div></div>
+                
+                <!-- Tarjeta 1: Empaque (combo1.jpg) -->
+                <div class="app-card">
+                    <div class="app-card-image">
+                        <img src="img/combo1.jpg" alt="Empaque para productos Ampara">
+                    </div>
+                    <div class="app-card-content">
+                        <h3>Empaque para Productos</h3>
+                        <p>El empaque protege y presenta los productos, además de comunicar la identidad de Ampara mediante los colores, logotipo e ilustraciones.</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Bolsa (combo2.jpg) -->
+                <div class="app-card">
+                    <div class="app-card-image">
+                        <img src="img/combo2.jpg" alt="Bolsa para llevar Ampara">
+                    </div>
+                    <div class="app-card-content">
+                        <h3>Bolsa para Llevar</h3>
+                        <p>La bolsa facilita el transporte de los productos y prolonga la presencia de la marca fuera del punto de venta.</p>
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Tarjeta de presentación (combo3.jpg) -->
+                <div class="app-card">
+                    <div class="app-card-image">
+                        <img src="img/combo3.jpg" alt="Tarjeta de presentación Ampara">
+                    </div>
+                    <div class="app-card-content">
+                        <h3>Tarjeta de Presentación</h3>
+                        <p>La tarjeta reúne los datos de contacto y elementos esenciales de identidad, ofreciendo un medio sencillo para recordar y reconocer la marca.</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -536,7 +581,7 @@
         });
 
         /* =========================================
-           LÓGICA DEL MODAL CORREGIDA
+           LÓGICA DEL MODAL
            ========================================= */
         const modal = document.getElementById('miModal');
         const imagenModal = document.getElementById('imagenModal');
